@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 export default function TodoItem(props){
   const classes = useStyles();
   function handleDelete(){
-    console.log('You clicked the delete button');
+    props.deleteItem(props.item)
   }
   return (
     <Grid container spacing={0}>
