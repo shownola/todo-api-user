@@ -7,12 +7,18 @@ import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 class TodoForm extends Component {
   constructor(props){
     super(props)
+    let defaultTask = '';
+    let defaultBody = '';
     this.state = {
       api_url: props.api_url,
-      task: "",
+      task: defaultTask,
+      body: defaultBody,
+      defaultTaskValue: defaultTask,
+      defaultBodyValue: defaultBody
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleTaskChange = this.handleTaskChange.bind(this);
+    this.handleBodyChange = this.handleBodyChange.bind(this);
   }
   handleSubmit(event){
     event.preventDefault();
@@ -26,11 +32,21 @@ class TodoForm extends Component {
       body: data
     }).then(response => response.json())
     .then(response => this.props.updateTodoList(response))
+    this.setState({
+      task: this.state.defaultTaskValue,
+      body: this.state.defaultBodyValue
+    })
   }
 
   handleTaskChange(event){
     this.setState({
       task: event.target.value
+    })
+  }
+
+  handleBodyChange(event){
+    this.setState({
+      body: event.target.value
     })
   }
 
@@ -42,10 +58,10 @@ class TodoForm extends Component {
             <form onSubmit={this.handleSubmit} id="todo_form" autoComplete="off">
               <Grid container>
                 <Grid item xs={12}>
-                  <TextField id="task_input" label="Task Title" variant="outlined" type="text" name="todo[task]" onChange={this.handleTaskChange} fullWidth />
+                  <TextField id="task_input" label="Task Title" variant="outlined" type="text" name="todo[task]" value={this.state.task} onChange={this.handleTaskChange} fullWidth />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextareaAutosize id="body_input" label="Task Body" variant="outlined" type="text" style={{width: '99.6%', borderRadius: '5px'}} rowsMin={3} name="todo[body]" placeholder="Describe your todo item..." />
+                  <TextareaAutosize id="body_input" label="Task Body" variant="outlined" type="text" value={this.state.body} onChange={this.handleBodyChange} style={{width: '99.6%', borderRadius: '5px'}} rowsMin={3} name="todo[body]" placeholder="Describe your todo item..." />
                 </Grid>
                 <Grid item xs={2}>
                   <Button variant="contained" color="primary" type="submit" style={{ height: '100%' }}>Add Task</Button>
