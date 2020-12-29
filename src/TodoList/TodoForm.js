@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 class TodoForm extends Component {
   constructor(props){
@@ -40,8 +41,11 @@ class TodoForm extends Component {
           <Grid item xs={10}>
             <form onSubmit={this.handleSubmit} id="todo_form" autoComplete="off">
               <Grid container>
-                <Grid item xs={10}>
-                  <TextField id="task_input" label="Task Description" variant="outlined" type="text" name="todo[task]" onChange={this.handleTaskChange} fullWidth />
+                <Grid item xs={12}>
+                  <TextField id="task_input" label="Task Title" variant="outlined" type="text" name="todo[task]" onChange={this.handleTaskChange} fullWidth />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextareaAutosize id="body_input" label="Task Body" variant="outlined" type="text" style={{width: '99.6%', borderRadius: '5px'}} rowsMin={3} name="todo[body]" placeholder="Describe your todo item..." />
                 </Grid>
                 <Grid item xs={2}>
                   <Button variant="contained" color="primary" type="submit" style={{ height: '100%' }}>Add Task</Button>
